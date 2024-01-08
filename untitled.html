@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="logo.png" type="image">
+    <title>Huella de Carbono</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Calibri;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #3bc47f;
+            color: #00617f;
+            text-align: center;
+            padding: 1em;
+        }
+
+        section {
+            margin: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 10px;
+        }
+
+        button {
+            margin-top: 10px;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        #result {
+            margin-top: 20px;
+        }
+
+        #recommendationList {
+            margin-top: 10px;
+        }
+
+        #sticky-section {
+            position: fixed;
+            margin-top: 35vh;
+            right: 0;
+            background-color: #3bc47f;
+            padding: 15px;
+            text-align: center;
+            height: 25vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        ul {
+            list-style-type: none;
+        }
+
+        #social-icons {
+            background-color: #3bc47f;
+            margin-top: auto;
+            margin-bottom: auto;
+        }
+
+        #social-icons a {
+            color: white;
+            margin: 0 10px;
+            text-decoration: none;
+            font-size: 20px;
+        }
+    </style>
+    <script>
+        let treeCounter = Math.floor(Math.random() * (1000 - 135 + 1)) + 135; // Inicializar con un número aleatorio entre 135 y 1000
+
+        function calculateCarbonFootprint() {
+            // Obtener los valores de entrada
+            const electricity = parseFloat(document.getElementById('electricity').value);
+            const transportation = parseFloat(document.getElementById('transportation').value);
+            const waste = parseFloat(document.getElementById('waste').value);
+
+            // Validar que los valores sean números
+            if (isNaN(electricity) || isNaN(transportation) || isNaN(waste)) {
+                alert("Por favor, ingresa números válidos en los campos de entrada.");
+                return;
+            }
+
+            // Calcular la huella de carbono (esto es un cálculo ficticio)
+            const carbonFootprint = electricity * 0.5 + transportation * 0.6 + waste * 0.3;
+            // Mostrar el resultado
+            document.getElementById('result').innerHTML = `<p>Tu huella de carbono es: ${carbonFootprint.toFixed(2)} kg CO2e</p>`;
+
+            // Obtener recomendaciones personalizadas
+            const recommendations = getRecommendations(carbonFootprint);
+
+            // Mostrar las recomendaciones
+            displayRecommendations(recommendations);
+        }
+
+        function getRecommendations(footprint) {
+            // Lógica para obtener recomendaciones basadas en la huella de carbono
+            // (Esto es un ejemplo, debes personalizar según la información disponible)
+            if (footprint < 40) {
+                return ["Apaga los dispositivos electrónicos cuando no los uses.", "Usa bombillas LED de bajo consumo.",  "Recicla y separa los residuos correctamente.", "Estas produciendo muy pocas emisiones, sigue así!! :)"];
+            } else if (footprint < 90) {
+                return ["Reduce el uso del automóvil y utiliza transporte público o bicicleta.", "Recicla más y reduce la generación de residuos.","Prefiere productos duraderos y de calidad que necesiten ser reemplazados con menos frecuencia.",  "Limita el tiempo en la ducha y considera la posibilidad de instalar un cabezal de ducha de bajo flujo."];
+            } else {
+                return ["Considera utilizar energías renovables en tu hogar.", "Considera la posibilidad de instalar paneles solares si es viable en tu área.", "Participa en proyectos de reforestación para compensar tu huella de carbono.","Participa en iniciativas locales de sostenibilidad y colabora con organizaciones ambientales.", "Repara las fugas de agua y utiliza dispositivos de ahorro de agua.", ];
+            }
+        }
+
+        function displayRecommendations(recommendations) {
+            const recommendationList = document.getElementById('recommendationList');
+            recommendationList.innerHTML = "<p>Recomendaciones:</p><ul>";
+
+            recommendations.forEach((recommendation) => {
+                recommendationList.innerHTML += `<li>${recommendation}</li>`;
+            });
+
+            recommendationList.innerHTML += "</ul>";
+        }
+
+        function plantTree() {
+            treeCounter++;
+            alert(`¡Has plantado un árbol! Total de árboles plantados: ${treeCounter}`);
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>EcoCalculations</h1>
+    </header>
+    
+    <section id="calculator">
+        <h2>Calculadora de Huella de Carbono</h2>
+        <form id="carbonForm">
+            <label for="electricity">Consumo de electricidad (kWh): </label>
+            <input type="number" id="electricity" placeholder="Necesario rellenar este campo con un número" required>
+            
+            <label for="transportation">Transporte (km): </label>
+            <input type="number" id="transportation" placeholder="Necesario rellenar este campo con un número" required>
+            
+            <label for="waste">Generación de residuos (kg): </label>
+            <input type="number" id="waste" placeholder="Necesario rellenar este campo con un número" required>
+            
+            <button type="button" onclick="calculateCarbonFootprint()">Calcular</button>
+        </form>
+        
+        <div id="result"></div>
+    </section>
+
+    <section id="recommendations">
+        <h2>Recomendaciones Personalizadas</h2>
+        <div id="recommendationList"></div>
+    </section>
+
+    <div id="sticky-section">
+        <div id="social-icons">
+            <ul>
+                <li><a href="https://www.facebook.com/profile.php?id=61554861160590"><img src="https://cdn.icon-icons.com/icons2/3261/PNG/512/facebook_circle_logo_icon_206764.png" class="fab fa-facebook" width="50" height="50"></a></li>
+                <li><a href="https://twitter.com/ecocalculations"><img src="https://cdn-icons-png.flaticon.com/512/1532/1532424.png" class="fab fa-twitter" width="50" height="50"></a></li>
+                <li><a href="https://www.instagram.com/ecocalculations/"><img src="https://cdn.icon-icons.com/icons2/1995/PNG/512/instagram_internet_media_network_social_icon_123258.png" class="fab fa-instagram" width="50" height="50"></a></li>
+            </ul>
+        </div>
+        <button onclick="plantTree()">Planta un árbol</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
